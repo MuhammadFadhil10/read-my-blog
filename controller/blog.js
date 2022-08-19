@@ -10,3 +10,4 @@ const createBlog = async (req, res) => {
 		console.log(error);
 	}
 };
+exports.createBlog = createBlog;

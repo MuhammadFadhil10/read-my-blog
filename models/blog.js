@@ -9,7 +9,9 @@ class Blog {
 		this.tag = tag;
 	}
 	create() {
-		mongo.collection('blogs').insertOne(this);
+
+		return mongo().collection('blogs').insertOne(this);
+
 	}
 }
 

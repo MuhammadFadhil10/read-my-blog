@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 const port = process.env.PORT;
+const { mongoConnect } = require('./config/mongoConfig');
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.listen(port, () => {
-	console.log(`server running on port ${port}`);
+mongoConnect(() => {
+	app.listen(port);
 });

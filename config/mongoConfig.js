@@ -9,7 +9,7 @@ const mongoConnect = async (cb) => {
 	try {
 		await client.connect((err) => {
 			if (!err) {
-				db = client.db;
+				db = client.db('blogs');
 				console.log('mongodb connected');
 				cb();
 			}

@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const Blog = require('../models/blog');
 
 const createBlog = async (req, res) => {
@@ -12,7 +13,7 @@ const createBlog = async (req, res) => {
 };
 
 const updateBlog = async (req, res) => {
-	const { blogId } = req.params;
+	const blogId = new ObjectId(req.params.blogId);
 	const updatedTitle = req.body.title;
 	const updatedThumbnail = req.body.thumbnail;
 	const updatedContent = req.body.content;

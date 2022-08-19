@@ -9,7 +9,7 @@ class Blog {
 		this.tag = tag;
 	}
 	create() {
-		return mongo.collection('blogs').insertOne(this);
+		return mongo().collection('blogs').insertOne(this);
 	}
 }
 

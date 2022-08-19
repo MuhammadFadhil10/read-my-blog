@@ -9,9 +9,30 @@ class Blog {
 		this.tag = tag;
 	}
 	create() {
-
 		return mongo().collection('blogs').insertOne(this);
-
+	}
+	static update(
+		blogId,
+		updatedTitle,
+		updatedThumbnail,
+		updatedContent,
+		isAnonymous,
+		updatedTag
+	) {
+		return mongo()
+			.collection('blogs')
+			.updateOne(
+				{ _id: blogId },
+				{
+					$set: {
+						title: updatedTitle,
+						thumbnail: updatedThumbnail,
+						content: updatedContent,
+						isAnonymous: isAnonymous,
+						tag: updatedTag,
+					},
+				}
+			);
 	}
 }
 

@@ -12,6 +12,10 @@ const createBlog = async (req, res) => {
 	}
 };
 
+const findById = async (req, res) => {
+	const blogId = new ObjectId(req.params.blogId);
+};
+
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
 	const updatedTitle = req.body.title;
@@ -41,3 +45,4 @@ const updateBlog = async (req, res) => {
 
 exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
+exports.findById = findById;

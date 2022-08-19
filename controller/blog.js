@@ -10,4 +10,33 @@ const createBlog = async (req, res) => {
 		console.log(error);
 	}
 };
+
+const updateBlog = async (req, res) => {
+	const { blogId } = req.params;
+	const updatedTitle = req.body.title;
+	const updatedThumbnail = req.body.thumbnail;
+	const updatedContent = req.body.content;
+	const isAnonymous = req.body.isAnonymous;
+	const updatedTag = req.body.tag;
+
+	try {
+		await Blog.update(
+			blogId,
+			updatedTitle,
+			updatedThumbnail,
+			updatedContent,
+			isAnonymous,
+			updatedTag
+		);
+		return res
+			.json({
+				message: 'blog edited!',
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.createBlog = createBlog;
+exports.updateBlog = updateBlog;

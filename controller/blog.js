@@ -14,6 +14,16 @@ const createBlog = async (req, res) => {
 
 const findById = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
+	try {
+		const blog = await Blog.findById(blogId);
+		return res
+			.json({
+				data: blog,
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const updateBlog = async (req, res) => {

@@ -11,6 +11,11 @@ class Blog {
 	create() {
 		return mongo().collection('blogs').insertOne(this);
 	}
+
+	static findById(blogId) {
+		return mongo().collection('blogs').findOne({ _id: blogId });
+	}
+
 	static update(
 		blogId,
 		updatedTitle,

@@ -26,7 +26,21 @@ const findById = async (req, res) => {
 	}
 };
 
-const blogSearch = async (req, res) => {};
+const blogSearch = async (req, res) => {
+	// const title = req.query.title;
+	// const tag = req.query.tag;
+	// const searchInfo = {
+	// 	type: title ? 'title' : 'tag',
+	// 	string: title ? title : tag,
+	// };
+	const value = req.query.v;
+	try {
+		const data = await Blog.search(value).toArray();
+		console.log(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);

@@ -14,7 +14,7 @@ router.post('/create-blog', createBlog);
 // get
 router.get('/blog/:blogId', findById);
 
-router.get('/blogs/s?t=:title', blogSearch);
+router.get('/blogs/s', blogSearch);
 
 // update
 router.patch('/edit-blog/:blogId', updateBlog);

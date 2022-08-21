@@ -16,6 +16,18 @@ class Blog {
 		return mongo().collection('blogs').findOne({ _id: blogId });
 	}
 
+	static search(searchData) {
+		return mongo()
+			.collection('blogs')
+			.find({ $text: { $search: searchData } });
+		// if (searchData.type === 'title') {
+		// 	mongo().collection('blogs').createIndex({ title: 'text', tag: 'text' });
+		// 	return mongo()
+		// 		.collection('blogs')
+		// 		.find({ $text: { $search: searchData.string } });
+		// }
+	}
+
 	static update(
 		blogId,
 		updatedTitle,

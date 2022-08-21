@@ -42,7 +42,18 @@ const blogSearch = async (req, res) => {
 	}
 };
 
-const allBlogs = async (req, res) => {};
+const allBlogs = async (req, res) => {
+	try {
+		const blogs = await Blog.fetchAll().toArray();
+		return res
+			.json({
+				blogs: blogs.length === 0 ? 'no blog found' : blogs,
+			})
+			.status(blogs.length === 0 ? 404 : 200);
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
@@ -75,3 +86,4 @@ exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
 exports.findById = findById;
 exports.blogSearch = blogSearch;
+exports.allBlogs = allBlogs;

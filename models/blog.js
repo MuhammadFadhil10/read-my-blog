@@ -16,6 +16,10 @@ class Blog {
 		return mongo().collection('blogs').findOne({ _id: blogId });
 	}
 
+	static fetchAll() {
+		return mongo().collection('blogs').find({});
+	}
+
 	static search(searchData) {
 		return mongo()
 			.collection('blogs')

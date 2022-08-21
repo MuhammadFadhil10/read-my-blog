@@ -7,7 +7,9 @@ const {
 	findById,
 	blogSearch,
 	allBlogs,
-	deleteBlog,
+delete-blogs
+
+
 } = require('../controller/blog');
 
 // Post

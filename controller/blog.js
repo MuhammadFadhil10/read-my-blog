@@ -12,6 +12,49 @@ const createBlog = async (req, res) => {
 	}
 };
 
+const findById = async (req, res) => {
+	const blogId = new ObjectId(req.params.blogId);
+	try {
+		const blog = await Blog.findById(blogId);
+		return res
+			.json({
+				data: blog,
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const blogSearch = async (req, res) => {
+	// const title = req.query.title;
+	// const tag = req.query.tag;
+	// const searchInfo = {
+	// 	type: title ? 'title' : 'tag',
+	// 	string: title ? title : tag,
+	// };
+	const value = req.query.v;
+	try {
+		const data = await Blog.search(value).toArray();
+		console.log(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const allBlogs = async (req, res) => {
+	try {
+		const blogs = await Blog.fetchAll().toArray();
+		return res
+			.json({
+				blogs: blogs.length === 0 ? 'no blog found' : blogs,
+			})
+			.status(blogs.length === 0 ? 404 : 200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
 	const updatedTitle = req.body.title;
@@ -41,3 +84,6 @@ const updateBlog = async (req, res) => {
 
 exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
+exports.findById = findById;
+exports.blogSearch = blogSearch;
+exports.allBlogs = allBlogs;

@@ -55,6 +55,10 @@ class Blog {
 				}
 			);
 	}
+
+	static delete(blogId) {
+		return mongo().collection('blogs').deleteOne({ _id: blogId });
+	}
 }
 
 module.exports = Blog;

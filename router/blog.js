@@ -7,6 +7,9 @@ const {
 	findById,
 	blogSearch,
 	allBlogs,
+delete-blogs
+
+
 } = require('../controller/blog');
 
 // Post
@@ -19,5 +22,8 @@ router.get('/blogs/s', blogSearch);
 
 // update
 router.patch('/edit-blog/:blogId', updateBlog);
+
+// delete
+router.delete('/blog/delete/:blogId', deleteBlog);
 
 module.exports = router;

@@ -56,7 +56,7 @@ class Blog {
 			);
 	}
 
-	static update(blogId) {
+	static delete(blogId) {
 		return mongo().collection('blogs').deleteOne({ _id: blogId });
 	}
 }

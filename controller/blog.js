@@ -82,8 +82,22 @@ const updateBlog = async (req, res) => {
 	}
 };
 
+const deleteBlog = async (req, res) => {
+	const blogId = new ObjectId(req.params.blogId);
+	try {
+		await Blog.delete(blogId);
+
+		return res.json({
+			message: 'blog deleted!',
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
 exports.findById = findById;
 exports.blogSearch = blogSearch;
 exports.allBlogs = allBlogs;
+exports.deleteBlog = deleteBlog;

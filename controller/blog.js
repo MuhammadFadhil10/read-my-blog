@@ -42,6 +42,8 @@ const blogSearch = async (req, res) => {
 	}
 };
 
+const allBlogs = async (req, res) => {};
+
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
 	const updatedTitle = req.body.title;

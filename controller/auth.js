@@ -9,4 +9,10 @@ const register = (req, res) => {
 			message: error.array().map((err) => err.msg),
 		});
 	}
+	return res.json({
+		status: 'success',
+		message: 'Success create your account!',
+	});
 };
+
+exports.register = register;

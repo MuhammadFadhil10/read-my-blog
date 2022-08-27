@@ -6,4 +6,7 @@ class Auth {
 		this.userName = userName;
 		this.password = password;
 	}
+	createUser() {
+		return mongo().collection('users').insertOne(this);
+	}
 }

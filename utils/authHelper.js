@@ -18,6 +18,9 @@ class Validate {
 			.isLength({ min: minPassword })
 			.withMessage(`Password minimum length is ${minPassword} character!`);
 	}
+	static confirmPassword(fieldName) {
+		return body(fieldName, 'confirm your password').notEmpty();
+	}
 }
 
 module.exports = Validate;

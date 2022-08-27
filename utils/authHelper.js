@@ -10,4 +10,4 @@ class Validate {
 	}
 }
 
-module.exports = validate;
+module.exports = Validate;

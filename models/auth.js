@@ -18,3 +18,5 @@ class Auth {
 		return mongo().collection('users').findOne({ userName: value });
 	}
 }
+
+module.exports = Auth;

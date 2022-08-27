@@ -9,12 +9,14 @@ class Validate {
 	}
 	static userName(fieldName) {
 		return body(fieldName).notEmpty().withMessage('username Required!');
-		// const minPassword = 8;
-		// return body(fieldName)
-		// 	.notEmpty()
-		// 	.withMessage('Password Required!')
-		// 	.isLength({ min: minPassword })
-		// 	.withMessage(`Password minimum length is ${minPassword} character!`);
+	}
+	static password(fieldName) {
+		const minPassword = 8;
+		return body(fieldName)
+			.notEmpty()
+			.withMessage('Password Required!')
+			.isLength({ min: minPassword })
+			.withMessage(`Password minimum length is ${minPassword} character!`);
 	}
 }
 

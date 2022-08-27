@@ -60,6 +60,16 @@ const myBlogs = async (req, res) => {
 	const userId = new ObjectId(req.params.userId.trim());
 	try {
 		const blogs = await Blog.myBlog(userId).toArray();
+		if (blogs.length === 0) {
+			return res.json({
+				status: 'error',
+				message: 'You have no blog yet!',
+			});
+		}
+		return res.json({
+			status: 'success',
+			blogs: blogs,
+		});
 	} catch (error) {
 		console.log(error);
 	}

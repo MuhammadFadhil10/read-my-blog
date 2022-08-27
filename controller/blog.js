@@ -20,7 +20,7 @@ const createBlog = async (req, res) => {
 };
 
 const findById = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	try {
 		const blog = await Blog.findById(blogId);
 		return res

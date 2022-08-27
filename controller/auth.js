@@ -30,12 +30,25 @@ const register = async (req, res) => {
 	const user = new Auth(email, userName, hashedPassword);
 	await user.createUser();
 
-	// console.log(hashedPassword);
-
 	return res.json({
 		status: 'success',
 		message: 'Success create your account!',
 	});
 };
 
+const login = async (req, res) => {
+	const { email, password } = req.body;
+	// check if user exist with email
+	const userExist = await Auth.find('email', email);
+	if (!userExist) {
+		return res.json({
+			status: 'error',
+			message: 'email or password wrong!',
+		});
+	}
+	const isPasswordMatch = await compare(password, password);
+	console.log(isPasswordMatch);
+};
+
 exports.register = register;
+exports.login = login;

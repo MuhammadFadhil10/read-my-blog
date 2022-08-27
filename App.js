@@ -10,8 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 
 const blogRouter = require('./router/blog');
+const authRouter = require('./router/auth');
 
 app.use('/api', blogRouter);
+app.use('/api/auth', authRouter);
 
 mongoConnect(() => {
 	app.listen(port);

@@ -14,12 +14,22 @@ const register = async (req, res) => {
 	}
 
 	const emailExist = await Auth.find('email', email);
-	const userNameExist = await Auth.find('email', userName);
+	const userNameExist = await Auth.find('userName', userName);
 
-	console.log(emailExist);
-	console.log(userNameExist);
+	if (emailExist || userNameExist) {
+		return res.json({
+			status: 'error',
+			message: emailExist
+				? `email ${email} is already registered!`
+				: `username ${userName} is already registered!`,
+		});
+	}
 
-	// const hashedPassword = await hash(password.toString(), 12);
+	const hashedPassword = await hash(password.toString(), 12);
+
+	const user = new Auth(email, userName, hashedPassword);
+	await user.createUser();
+
 	// console.log(hashedPassword);
 
 	return res.json({

@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
+const { hash, compare } = require('bcryptjs');
 
-const register = (req, res) => {
+const register = async (req, res) => {
 	const { email, userName, password, confirmPassword } = req.body;
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
@@ -9,6 +10,10 @@ const register = (req, res) => {
 			message: error.array().map((err) => err.msg),
 		});
 	}
+
+	const hashedPassword = await hash(password.toString(), 12);
+	console.log(hashedPassword);
+
 	return res.json({
 		status: 'success',
 		message: 'Success create your account!',

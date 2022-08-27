@@ -25,12 +25,10 @@ class Blog {
 		return mongo()
 			.collection('blogs')
 			.find({ $text: { $search: searchData } });
-		// if (searchData.type === 'title') {
-		// 	mongo().collection('blogs').createIndex({ title: 'text', tag: 'text' });
-		// 	return mongo()
-		// 		.collection('blogs')
-		// 		.find({ $text: { $search: searchData.string } });
-		// }
+	}
+
+	static myBlog(userId) {
+		return mongo().collection('blogs').find({ userId: userId });
 	}
 
 	static update(

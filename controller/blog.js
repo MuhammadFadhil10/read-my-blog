@@ -49,6 +49,16 @@ const allBlogs = async (req, res) => {
 	}
 };
 
+const myBlogs = async (req, res) => {
+	const { userId } = req.params;
+	try {
+		const blogs = await Blog.myBlog(userId);
+		console.log(blogs);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const updateBlog = async (req, res) => {
 	const blogId = new ObjectId(req.params.blogId);
 	const updatedTitle = req.body.title;

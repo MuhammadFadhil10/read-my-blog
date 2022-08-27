@@ -1,5 +1,4 @@
 const { body } = require('express-validator');
-const { validate } = require('uuid');
 class Validate {
 	static email(fieldName) {
 		return body(fieldName)

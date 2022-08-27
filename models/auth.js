@@ -9,4 +9,7 @@ class Auth {
 	createUser() {
 		return mongo().collection('users').insertOne(this);
 	}
+	static findById(id) {
+		return mongo().collection('users').findOne({ _id: id });
+	}
 }

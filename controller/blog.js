@@ -3,7 +3,14 @@ const Blog = require('../models/blog');
 
 const createBlog = async (req, res) => {
 	const { title, thumbnail, content, isAnonymous, tag, userId } = req.body;
-	const blog = new Blog(title, thumbnail, content, isAnonymous, tag, userId);
+	const blog = new Blog(
+		title,
+		thumbnail,
+		content,
+		isAnonymous,
+		tag,
+		new ObjectId(userId)
+	);
 	try {
 		await blog.create();
 		return res.json({ message: 'succesfully create a blog!' }).status(200);
@@ -50,9 +57,9 @@ const allBlogs = async (req, res) => {
 };
 
 const myBlogs = async (req, res) => {
-	const { userId } = req.params;
+	const userId = new ObjectId(req.params.userId.trim());
 	try {
-		const blogs = await Blog.myBlog(userId);
+		const blogs = await Blog.myBlog(userId).toArray();
 		console.log(blogs);
 	} catch (error) {
 		console.log(error);

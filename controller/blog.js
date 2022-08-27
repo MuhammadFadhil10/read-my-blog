@@ -60,7 +60,6 @@ const myBlogs = async (req, res) => {
 	const userId = new ObjectId(req.params.userId.trim());
 	try {
 		const blogs = await Blog.myBlog(userId).toArray();
-		console.log(blogs);
 	} catch (error) {
 		console.log(error);
 	}

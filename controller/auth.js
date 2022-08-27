@@ -38,6 +38,14 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 	const { email, password } = req.body;
+	// check if input not error
+	const error = validationResult(req);
+	if (!error.isEmpty()) {
+		return res.json({
+			status: 'error',
+			message: error.array().map((err) => err.msg),
+		});
+	}
 	// check if user exist with email
 	const userExist = await Auth.find('email', email);
 	if (!userExist) {

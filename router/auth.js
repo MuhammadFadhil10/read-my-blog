@@ -13,6 +13,11 @@ router.post(
 	register
 );
 
-router.post('/login', login);
+router.post(
+	'/login',
+	Validate.email('email'),
+	Validate.password('password'),
+	login
+);
 
 module.exports = router;

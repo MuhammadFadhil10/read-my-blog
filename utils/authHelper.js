@@ -1,4 +1,5 @@
 const { body } = require('express-validator');
+const { validate } = require('uuid');
 class Validate {
 	static email(fieldName) {
 		return body(fieldName)
@@ -8,3 +9,5 @@ class Validate {
 			.withMessage('Fill with correct email!');
 	}
 }
+
+module.exports = validate;

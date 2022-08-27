@@ -46,8 +46,17 @@ const login = async (req, res) => {
 			message: 'email or password wrong!',
 		});
 	}
-	const isPasswordMatch = await compare(password, password);
-	console.log(isPasswordMatch);
+	const isPasswordMatch = await compare(password, userExist.password);
+	if (!isPasswordMatch) {
+		return res.json({
+			status: 'error',
+			message: 'email or password wrong!',
+		});
+	}
+	return res.json({
+		status: 'success',
+		message: 'you are logged in!',
+	});
 };
 
 exports.register = register;

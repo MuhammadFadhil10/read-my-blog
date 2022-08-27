@@ -103,5 +103,6 @@ exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
 exports.findById = findById;
 exports.blogSearch = blogSearch;
+exports.myBlogs = myBlogs;
 exports.allBlogs = allBlogs;
 exports.deleteBlog = deleteBlog;

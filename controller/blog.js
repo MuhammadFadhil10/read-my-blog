@@ -9,7 +9,7 @@ const createBlog = async (req, res) => {
 		content,
 		isAnonymous,
 		tag,
-		new ObjectId(userId)
+		new ObjectId(userId.trim())
 	);
 	try {
 		await blog.create();
@@ -37,7 +37,6 @@ const blogSearch = async (req, res) => {
 	const value = req.query.v;
 	try {
 		const data = await Blog.search(value).toArray();
-		console.log(data);
 	} catch (error) {
 		console.log(error);
 	}
@@ -76,7 +75,7 @@ const myBlogs = async (req, res) => {
 };
 
 const updateBlog = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	const updatedTitle = req.body.title;
 	const updatedThumbnail = req.body.thumbnail;
 	const updatedContent = req.body.content;
@@ -103,7 +102,7 @@ const updateBlog = async (req, res) => {
 };
 
 const deleteBlog = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	try {
 		await Blog.delete(blogId);
 

@@ -4,7 +4,7 @@ const { hash, compare } = require('bcryptjs');
 const Auth = require('../models/auth');
 
 const register = async (req, res) => {
-	const { email, userName, password, confirmPassword } = req.body;
+	const { email, userName, name, password, confirmPassword } = req.body;
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
 		return res.json({
@@ -27,7 +27,7 @@ const register = async (req, res) => {
 
 	const hashedPassword = await hash(password.toString(), 12);
 
-	const user = new Auth(email, userName, hashedPassword);
+	const user = new Auth(email, userName, name, hashedPassword);
 	await user.createUser();
 
 	return res.json({

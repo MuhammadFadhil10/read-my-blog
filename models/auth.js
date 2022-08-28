@@ -1,9 +1,10 @@
 const { mongo } = require('../config/mongoConfig');
 
 class Auth {
-	constructor(email, userName, password) {
+	constructor(email, userName, name, password) {
 		this.email = email;
 		this.userName = userName;
+		this.name = name;
 		this.password = password;
 	}
 	createUser() {
@@ -14,6 +15,8 @@ class Auth {
 			return mongo().collection('users').findOne({ _id: value });
 		} else if (filter === 'email') {
 			return mongo().collection('users').findOne({ email: value });
+		} else if (filter === 'name') {
+			return mongo().collection('users').findOne({ name: value });
 		}
 		return mongo().collection('users').findOne({ userName: value });
 	}

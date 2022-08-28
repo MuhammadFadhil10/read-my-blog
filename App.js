@@ -11,8 +11,10 @@ app.use(bodyParser.json());
 
 const blogRouter = require('./router/blog');
 const authRouter = require('./router/auth');
+const userRouter = require('./router/user');
 
 app.use('/api', blogRouter);
+app.use('/api', userRouter);
 app.use('/api/auth', authRouter);
 
 mongoConnect(() => {

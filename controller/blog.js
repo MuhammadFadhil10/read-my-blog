@@ -2,8 +2,15 @@ const { ObjectId } = require('mongodb');
 const Blog = require('../models/blog');
 
 const createBlog = async (req, res) => {
-	const { title, thumbnail, content, isAnonymous, tag } = req.body;
-	const blog = new Blog(title, thumbnail, content, isAnonymous, tag);
+	const { title, thumbnail, content, isAnonymous, tag, userId } = req.body;
+	const blog = new Blog(
+		title,
+		thumbnail,
+		content,
+		isAnonymous,
+		tag,
+		new ObjectId(userId.trim())
+	);
 	try {
 		await blog.create();
 		return res.json({ message: 'succesfully create a blog!' }).status(200);
@@ -13,7 +20,7 @@ const createBlog = async (req, res) => {
 };
 
 const findById = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	try {
 		const blog = await Blog.findById(blogId);
 		return res
@@ -27,16 +34,9 @@ const findById = async (req, res) => {
 };
 
 const blogSearch = async (req, res) => {
-	// const title = req.query.title;
-	// const tag = req.query.tag;
-	// const searchInfo = {
-	// 	type: title ? 'title' : 'tag',
-	// 	string: title ? title : tag,
-	// };
 	const value = req.query.v;
 	try {
 		const data = await Blog.search(value).toArray();
-		console.log(data);
 	} catch (error) {
 		console.log(error);
 	}
@@ -55,8 +55,27 @@ const allBlogs = async (req, res) => {
 	}
 };
 
+const myBlogs = async (req, res) => {
+	const userId = new ObjectId(req.params.userId.trim());
+	try {
+		const blogs = await Blog.myBlog(userId).toArray();
+		if (blogs.length === 0) {
+			return res.json({
+				status: 'error',
+				message: 'You have no blog yet!',
+			});
+		}
+		return res.json({
+			status: 'success',
+			blogs: blogs,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const updateBlog = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	const updatedTitle = req.body.title;
 	const updatedThumbnail = req.body.thumbnail;
 	const updatedContent = req.body.content;
@@ -83,7 +102,7 @@ const updateBlog = async (req, res) => {
 };
 
 const deleteBlog = async (req, res) => {
-	const blogId = new ObjectId(req.params.blogId);
+	const blogId = new ObjectId(req.params.blogId.trim());
 	try {
 		await Blog.delete(blogId);
 
@@ -99,6 +118,6 @@ exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
 exports.findById = findById;
 exports.blogSearch = blogSearch;
+exports.myBlogs = myBlogs;
 exports.allBlogs = allBlogs;
 exports.deleteBlog = deleteBlog;
-

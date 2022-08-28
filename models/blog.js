@@ -1,12 +1,13 @@
 const { mongo } = require('../config/mongoConfig');
 
 class Blog {
-	constructor(title, thumbnail, content, isAnonymous, tag) {
+	constructor(title, thumbnail, content, isAnonymous, tag, userId) {
 		this.title = title;
 		this.thumbnail = thumbnail;
 		this.content = content;
 		this.isAnonymous = isAnonymous;
 		this.tag = tag;
+		this.userId = userId;
 	}
 	create() {
 		return mongo().collection('blogs').insertOne(this);
@@ -24,12 +25,10 @@ class Blog {
 		return mongo()
 			.collection('blogs')
 			.find({ $text: { $search: searchData } });
-		// if (searchData.type === 'title') {
-		// 	mongo().collection('blogs').createIndex({ title: 'text', tag: 'text' });
-		// 	return mongo()
-		// 		.collection('blogs')
-		// 		.find({ $text: { $search: searchData.string } });
-		// }
+	}
+
+	static myBlog(userId) {
+		return mongo().collection('blogs').find({ userId: userId });
 	}
 
 	static update(

@@ -6,6 +6,7 @@ const {
 	updateBlog,
 	findById,
 	blogSearch,
+	myBlogs,
 	allBlogs,
 	deleteBlog,
 } = require('../controller/blog');
@@ -17,6 +18,7 @@ router.post('/create-blog', createBlog);
 router.get('/blogs', allBlogs);
 router.get('/blog/:blogId', findById);
 router.get('/blogs/s', blogSearch);
+router.get('/blog/my-blog/:userId', myBlogs);
 
 // update
 router.patch('/edit-blog/:blogId', updateBlog);

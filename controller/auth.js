@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const { hash, compare } = require('bcryptjs');
 
 const Auth = require('../models/auth');
+const User = require('../models/user');
 
 const register = async (req, res) => {
 	const { email, userName, name, password, confirmPassword } = req.body;
@@ -13,8 +14,8 @@ const register = async (req, res) => {
 		});
 	}
 
-	const emailExist = await Auth.find('email', email);
-	const userNameExist = await Auth.find('userName', userName);
+	const emailExist = await User.findUser('email', email);
+	const userNameExist = await User.findUser('userName', userName);
 
 	if (emailExist || userNameExist) {
 		return res.json({
@@ -47,7 +48,7 @@ const login = async (req, res) => {
 		});
 	}
 	// check if user exist with email
-	const userExist = await Auth.find('email', email);
+	const userExist = await User.findUser('email', email);
 	if (!userExist) {
 		return res.json({
 			status: 'error',

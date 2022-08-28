@@ -36,7 +36,21 @@ const findById = async (req, res) => {
 const blogSearch = async (req, res) => {
 	const value = req.query.v;
 	try {
-		const data = await Blog.search(value).toArray();
+		const blogs = await Blog.search(value).toArray();
+		if (blogs.length === 0) {
+			return res
+				.json({
+					status: 'error',
+					message: 'Blog not found!',
+				})
+				.status(404);
+		}
+		return res
+			.json({
+				status: 'success',
+				blogs: blogs,
+			})
+			.status(200);
 	} catch (error) {
 		console.log(error);
 	}

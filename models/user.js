@@ -32,6 +32,7 @@ class User {
 			.updateOne(
 				{ _id: userId },
 				{
+					// not update field if request not contain that field
 					$set: {
 						profilePicture: profilePicture,
 						userName: userName,

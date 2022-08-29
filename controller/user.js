@@ -39,34 +39,39 @@ const editProfile = async (req, res) => {
 	const { profilePicture, userName, name, bio, web, likedTopics } = req.body;
 	let oldProfileData = null;
 	try {
-		const userNameExist = await User.findUser('username', userName);
-		if (userNameExist) {
-			return res.json({
-				status: 'error',
-				message: 'Username already exist!',
-			});
-		}
 		oldProfileData = await User.findUser('id', userId);
+		if (userName) {
+			if (userName !== oldProfileData.userName) {
+				const userNameExist = await User.findUser('username', userName);
+				if (userNameExist) {
+					return res.json({
+						status: 'error',
+						message: 'Username already exist!',
+					});
+				}
+			}
+		}
+
 		// check if old "liked topics" is array
 		if (Array.isArray(oldProfileData.likedTopics)) {
 			if (Array.isArray(likedTopics)) {
 				await User.updateProfile(
 					userId,
-					profilePicture,
-					userName,
-					name,
-					bio,
-					web,
+					profilePicture ? profilePicture : oldProfileData.profilePicture,
+					userName ? userName : oldProfileData.userName,
+					name ? name : oldProfileData.name,
+					bio ? bio : oldProfileData.bio,
+					web ? web : oldProfileData.web,
 					[...oldProfileData.likedTopics, ...likedTopics]
 				);
 			} else {
 				await User.updateProfile(
 					userId,
-					profilePicture,
-					userName,
-					name,
-					bio,
-					web,
+					profilePicture ? profilePicture : oldProfileData.profilePicture,
+					userName ? userName : oldProfileData.userName,
+					name ? name : oldProfileData.name,
+					bio ? bio : oldProfileData.bio,
+					web ? web : oldProfileData.web,
 					[...oldProfileData.likedTopics, likedTopics]
 				);
 			}
@@ -74,11 +79,11 @@ const editProfile = async (req, res) => {
 			// where old liked topics not array
 			await User.updateProfile(
 				userId,
-				profilePicture,
-				userName,
-				name,
-				bio,
-				web,
+				profilePicture ? profilePicture : oldProfileData.profilePicture,
+				userName ? userName : oldProfileData.userName,
+				name ? name : oldProfileData.name,
+				bio ? bio : oldProfileData.bio,
+				web ? web : oldProfileData.web,
 				Array.isArray(likedTopics) ? likedTopics : [likedTopics]
 			);
 		}

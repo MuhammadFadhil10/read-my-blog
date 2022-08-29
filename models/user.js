@@ -18,7 +18,31 @@ class User {
 			.find({ $text: { $search: value } });
 	}
 
-
+	static updateProfile(
+		userId,
+		profilePicture,
+		userName,
+		name,
+		bio,
+		web,
+		likedTopics
+	) {
+		return mongo()
+			.collection('users')
+			.updateOne(
+				{ _id: userId },
+				{
+					$set: {
+						profilePicture: profilePicture,
+						userName: userName,
+						name: name,
+						bio: bio,
+						web: web,
+						likedTopics: likedTopics,
+					},
+				}
+			);
+	}
 }
 
 module.exports = User;

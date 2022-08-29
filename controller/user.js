@@ -47,7 +47,6 @@ const editProfile = async (req, res) => {
 			});
 		}
 		oldProfileData = await User.findUser('id', userId);
-		console.log(oldProfileData);
 		// check if old "liked topics" is array
 		if (Array.isArray(oldProfileData.likedTopics)) {
 			if (Array.isArray(likedTopics)) {
@@ -83,6 +82,10 @@ const editProfile = async (req, res) => {
 				Array.isArray(likedTopics) ? likedTopics : [likedTopics]
 			);
 		}
+		return res.json({
+			status: 'success',
+			message: 'Profile updated!',
+		});
 	} catch (error) {
 		console.log(error);
 	}

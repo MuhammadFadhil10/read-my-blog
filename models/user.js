@@ -28,7 +28,7 @@ class User {
 		likedTopics
 	) {
 		return mongo()
-			.collection('blogs')
+			.collection('users')
 			.updateOne(
 				{ _id: userId },
 				{

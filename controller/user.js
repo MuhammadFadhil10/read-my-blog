@@ -47,8 +47,42 @@ const editProfile = async (req, res) => {
 			});
 		}
 		oldProfileData = await User.findUser('id', userId);
-		console.log(typeof oldProfileData.likedTopics);
-		console.log(typeof likedTopics);
+		console.log(oldProfileData);
+		// check if old "liked topics" is array
+		if (Array.isArray(oldProfileData.likedTopics)) {
+			if (Array.isArray(likedTopics)) {
+				await User.updateProfile(
+					userId,
+					profilePicture,
+					userName,
+					name,
+					bio,
+					web,
+					[...oldProfileData.likedTopics, ...likedTopics]
+				);
+			} else {
+				await User.updateProfile(
+					userId,
+					profilePicture,
+					userName,
+					name,
+					bio,
+					web,
+					[...oldProfileData.likedTopics, likedTopics]
+				);
+			}
+		} else {
+			// where old liked topics not array
+			await User.updateProfile(
+				userId,
+				profilePicture,
+				userName,
+				name,
+				bio,
+				web,
+				Array.isArray(likedTopics) ? likedTopics : [likedTopics]
+			);
+		}
 	} catch (error) {
 		console.log(error);
 	}

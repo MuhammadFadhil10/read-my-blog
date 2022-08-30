@@ -57,35 +57,41 @@ const editProfile = async (req, res) => {
 		// check if old "liked topics" is array
 		if (Array.isArray(oldProfileData.likedTopics)) {
 			if (Array.isArray(likedTopics)) {
-				await User.updateProfile(
+				await updateProfileHelper(
+					User,
+					oldProfileData,
 					userId,
-					profilePicture ? profilePicture : oldProfileData.profilePicture,
-					userName ? userName : oldProfileData.userName,
-					name ? name : oldProfileData.name,
-					bio ? bio : oldProfileData.bio,
-					web ? web : oldProfileData.web,
+					profilePicture,
+					userName,
+					name,
+					bio,
+					web,
 					[...oldProfileData.likedTopics, ...likedTopics]
 				);
 			} else {
-				await User.updateProfile(
+				await updateProfileHelper(
+					User,
+					oldProfileData,
 					userId,
-					profilePicture ? profilePicture : oldProfileData.profilePicture,
-					userName ? userName : oldProfileData.userName,
-					name ? name : oldProfileData.name,
-					bio ? bio : oldProfileData.bio,
-					web ? web : oldProfileData.web,
+					profilePicture,
+					userName,
+					name,
+					bio,
+					web,
 					[...oldProfileData.likedTopics, likedTopics]
 				);
 			}
 		} else {
 			// where old liked topics not array
-			await User.updateProfile(
+			updateProfileHelper(
+				User,
+				oldProfileData,
 				userId,
-				profilePicture ? profilePicture : oldProfileData.profilePicture,
-				userName ? userName : oldProfileData.userName,
-				name ? name : oldProfileData.name,
-				bio ? bio : oldProfileData.bio,
-				web ? web : oldProfileData.web,
+				profilePicture,
+				userName,
+				name,
+				bio,
+				web,
 				Array.isArray(likedTopics) ? likedTopics : [likedTopics]
 			);
 		}

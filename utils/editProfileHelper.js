@@ -9,7 +9,7 @@ const updateProfileHelper = (
 	web,
 	likedTopics
 ) => {
-	return UserClass.updateProfileHelper(
+	return UserClass.updateProfile(
 		userId,
 		profilePicture ? profilePicture : oldProfileData.profilePicture,
 		userName ? userName : oldProfileData.userName,

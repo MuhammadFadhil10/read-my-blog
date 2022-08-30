@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongodb');
 const User = require('../models/user');
 
+const updateProfileHelper = require('../utils/editProfileHelper');
+
 const searchUser = async (req, res) => {
 	const value = req.query.v;
 	try {

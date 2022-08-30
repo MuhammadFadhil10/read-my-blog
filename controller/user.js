@@ -57,6 +57,7 @@ const editProfile = async (req, res) => {
 		// check if old "liked topics" is array
 		if (Array.isArray(oldProfileData.likedTopics)) {
 			if (Array.isArray(likedTopics)) {
+				// if old "liked topics" and new "liked topics" is array
 				await updateProfileHelper(
 					User,
 					oldProfileData,
@@ -69,6 +70,7 @@ const editProfile = async (req, res) => {
 					[...oldProfileData.likedTopics, ...likedTopics]
 				);
 			} else {
+				// if old "liked topics" is array but new "liked topics" is not array
 				await updateProfileHelper(
 					User,
 					oldProfileData,

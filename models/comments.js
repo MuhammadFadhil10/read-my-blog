@@ -17,7 +17,10 @@ class Comment {
 	static update(commentId, newText) {
 		return mongo()
 			.collection('comments')
-			.updateOne({ _id: commentId }, { $set: { text: newText } });
+			.updateOne(
+				{ _id: commentId },
+				{ $set: { text: newText, updatedTime: new Date().toISOString() } }
+			);
 	}
 	static delete(commentId) {
 		return mongo().collection('comments').deleteOne({ _id: commentId });

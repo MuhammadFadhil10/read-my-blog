@@ -1,13 +1,23 @@
 const { mongo } = require('../config/mongoConfig');
 
 class Blog {
-	constructor(title, thumbnail, content, isAnonymous, tag, userId) {
+	constructor(
+		title,
+		thumbnail,
+		content,
+		isAnonymous,
+		tag,
+		createdTime,
+		author
+	) {
 		this.title = title;
 		this.thumbnail = thumbnail;
 		this.content = content;
 		this.isAnonymous = isAnonymous;
 		this.tag = tag;
-		this.userId = userId;
+		this.createdTime = createdTime;
+		this.updatedTime = null;
+		this.author = author;
 	}
 	create() {
 		return mongo().collection('blogs').insertOne(this);
@@ -28,7 +38,7 @@ class Blog {
 	}
 
 	static myBlog(userId) {
-		return mongo().collection('blogs').find({ userId: userId });
+		return mongo().collection('blogs').find({ 'author._id': userId });
 	}
 
 	static update(
@@ -37,7 +47,10 @@ class Blog {
 		updatedThumbnail,
 		updatedContent,
 		isAnonymous,
-		updatedTag
+		updatedTag,
+		createdTime,
+		updatedTime,
+		author
 	) {
 		return mongo()
 			.collection('blogs')
@@ -50,6 +63,9 @@ class Blog {
 						content: updatedContent,
 						isAnonymous: isAnonymous,
 						tag: updatedTag,
+						createdTime: createdTime,
+						updatedTime: updatedTime,
+						author: author,
 					},
 				}
 			);

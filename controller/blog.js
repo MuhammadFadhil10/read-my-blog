@@ -1,15 +1,29 @@
 const { ObjectId } = require('mongodb');
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 const createBlog = async (req, res) => {
 	const { title, thumbnail, content, isAnonymous, tag, userId } = req.body;
+	const userObjId = new ObjectId(userId.trim());
+	const authorData = await User.findUser('id', userObjId);
+	const author = {
+		_id: authorData._id,
+		email: authorData.email,
+		userName: authorData.userName,
+		name: authorData.name,
+		profilePicture: authorData.profilePicture,
+		bio: authorData.bio,
+		web: authorData.web,
+		likedTopics: authorData.likedTopics,
+	};
 	const blog = new Blog(
 		title,
 		thumbnail,
 		content,
 		isAnonymous,
 		tag,
-		new ObjectId(userId.trim())
+		new Date().toISOString(),
+		author
 	);
 	try {
 		await blog.create();
@@ -96,14 +110,19 @@ const updateBlog = async (req, res) => {
 	const isAnonymous = req.body.isAnonymous;
 	const updatedTag = req.body.tag;
 
+	const oldBlogData = await Blog.findById(blogId);
+
 	try {
 		await Blog.update(
 			blogId,
-			updatedTitle,
-			updatedThumbnail,
-			updatedContent,
-			isAnonymous,
-			updatedTag
+			updatedTitle ? updatedTitle : oldBlogData.title,
+			updatedThumbnail ? updatedThumbnail : oldBlogData.thumbnail,
+			updatedContent ? updatedContent : oldBlogData.content,
+			isAnonymous ? isAnonymous : oldBlogData.isAnonymous,
+			updatedTag ? updatedTag : oldBlogData.tag,
+			oldBlogData.createdTime,
+			new Date().toISOString(),
+			oldBlogData.author
 		);
 		return res
 			.json({

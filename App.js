@@ -14,8 +14,12 @@ app.use(bodyParser.json());
 const blogRouter = require('./router/blog');
 const authRouter = require('./router/auth');
 const userRouter = require('./router/user');
+const commentRouter = require('./router/comments');
+const likeRouter = require('./router/like');
 
 app.use('/api', blogRouter);
+app.use('/api', commentRouter);
+app.use('/api', likeRouter);
 app.use('/api', userRouter);
 app.use('/api/auth', authRouter);
 

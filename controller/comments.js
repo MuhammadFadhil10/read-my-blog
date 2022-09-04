@@ -38,5 +38,20 @@ const getComment = async (req, res) => {
 	}
 };
 
+const updateComment = async (req, res) => {
+	const commentId = new ObjectId(req.params.commentId.trim());
+	const { newText } = req.body;
+	try {
+		await Comment.update(commentId, newText);
+		return res.json({
+			status: 'success',
+			message: 'comment updated',
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.uploadComment = uploadComment;
 exports.getComment = getComment;
+exports.updateComment = updateComment;

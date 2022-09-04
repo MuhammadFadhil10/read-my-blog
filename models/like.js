@@ -21,6 +21,9 @@ class Like {
 			.collection('likes')
 			.deleteOne({ blogId: blogId, 'sender._id': senderId });
 	}
+	static findByBlog(blogId) {
+		return mongo().collection('likes').find({ blogId: blogId });
+	}
 }
 
 module.exports = Like;

@@ -32,4 +32,20 @@ const like = async (req, res) => {
 	}
 };
 
+const getLike = async (req, res) => {
+	const blogId = new ObjectId(req.params.blogId.trim());
+	console.log(blogId);
+	try {
+		const likes = await Like.findByBlog(blogId).toArray();
+		return res.json({
+			status: 'success',
+			totalResult: likes.length,
+			likes: likes,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.like = like;
+exports.getLike = getLike;

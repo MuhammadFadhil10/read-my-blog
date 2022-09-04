@@ -16,7 +16,15 @@ const createBlog = async (req, res) => {
 		web: authorData.web,
 		likedTopics: authorData.likedTopics,
 	};
-	const blog = new Blog(title, thumbnail, content, isAnonymous, tag, author);
+	const blog = new Blog(
+		title,
+		thumbnail,
+		content,
+		isAnonymous,
+		tag,
+		new Date().toISOString(),
+		author
+	);
 	try {
 		await blog.create();
 		return res.json({ message: 'succesfully create a blog!' }).status(200);

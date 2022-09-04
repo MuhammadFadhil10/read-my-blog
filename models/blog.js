@@ -1,12 +1,22 @@
 const { mongo } = require('../config/mongoConfig');
 
 class Blog {
-	constructor(title, thumbnail, content, isAnonymous, tag, author) {
+	constructor(
+		title,
+		thumbnail,
+		content,
+		isAnonymous,
+		tag,
+		createdTime,
+		author
+	) {
 		this.title = title;
 		this.thumbnail = thumbnail;
 		this.content = content;
 		this.isAnonymous = isAnonymous;
 		this.tag = tag;
+		this.createdTime = createdTime;
+		this.updatedTime = null;
 		this.author = author;
 	}
 	create() {

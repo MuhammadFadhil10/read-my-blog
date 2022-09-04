@@ -11,6 +11,16 @@ class User {
 		}
 		return mongo().collection('users').findOne({ userName: value });
 	}
+	static findUsers(filter, value) {
+		if (filter === 'id') {
+			return mongo().collection('users').find({ _id: value });
+		} else if (filter === 'email') {
+			return mongo().collection('users').find({ email: value });
+		} else if (filter === 'name') {
+			return mongo().collection('users').find({ name: value });
+		}
+		return mongo().collection('users').find({ userName: value });
+	}
 
 	static searchUser(value) {
 		return mongo()

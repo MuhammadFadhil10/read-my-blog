@@ -1,16 +1,22 @@
 const { ObjectId } = require('mongodb');
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 const createBlog = async (req, res) => {
 	const { title, thumbnail, content, isAnonymous, tag, userId } = req.body;
-	const blog = new Blog(
-		title,
-		thumbnail,
-		content,
-		isAnonymous,
-		tag,
-		new ObjectId(userId.trim())
-	);
+	const userObjId = new ObjectId(userId.trim());
+	const authorData = await User.findUser('id', userObjId);
+	const author = {
+		_id: authorData._id,
+		email: authorData.email,
+		userName: authorData.userName,
+		name: authorData.name,
+		profilePicture: authorData.profilePicture,
+		bio: authorData.bio,
+		web: authorData.web,
+		likedTopics: authorData.likedTopics,
+	};
+	const blog = new Blog(title, thumbnail, content, isAnonymous, tag, author);
 	try {
 		await blog.create();
 		return res.json({ message: 'succesfully create a blog!' }).status(200);

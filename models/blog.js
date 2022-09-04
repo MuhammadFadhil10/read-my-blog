@@ -28,7 +28,7 @@ class Blog {
 	}
 
 	static myBlog(userId) {
-		return mongo().collection('blogs').find({ userId: userId });
+		return mongo().collection('blogs').find({ 'author._id': userId });
 	}
 
 	static update(

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const {} = require('../controller/comments');
+const { uploadComment } = require('../controller/comments');
+
+router.post('/comment/:senderId/:blogId', uploadComment);
 
 module.exports = router;

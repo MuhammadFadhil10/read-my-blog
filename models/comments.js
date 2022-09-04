@@ -1,7 +1,7 @@
-import { mongo } from '../config/mongoConfig';
+const { mongo } = require('../config/mongoConfig');
 
 class Comment {
-	constructor(sender, blogId, text, createdTime, updatedTime) {
+	constructor(sender, blogId, text, createdTime) {
 		this.sender = sender;
 		this.blogId = blogId;
 		this.text = text;

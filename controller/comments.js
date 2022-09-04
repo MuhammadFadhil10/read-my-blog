@@ -52,6 +52,20 @@ const updateComment = async (req, res) => {
 	}
 };
 
+const deleteComment = async (req, res) => {
+	const commentId = new ObjectId(req.params.commentId.trim());
+	try {
+		await Comment.delete(commentId);
+		return res.json({
+			status: 'success',
+			message: 'comment deleted!',
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.uploadComment = uploadComment;
 exports.getComment = getComment;
 exports.updateComment = updateComment;
+exports.deleteComment = deleteComment;

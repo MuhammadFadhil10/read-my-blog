@@ -13,9 +13,20 @@ const like = async (req, res) => {
 		const isLiked = await Like.checkLike(blogId, senderId);
 		if (!isLiked) {
 			await Like.sendLike(blogId, sender);
-		} else {
-			await Like.unLike(blogId, senderId);
+			return res
+				.json({
+					status: 'success',
+					message: 'success like!',
+				})
+				.status(200);
 		}
+		await Like.unLike(blogId, senderId);
+		res
+			.json({
+				status: 'success',
+				message: 'success unlike!',
+			})
+			.status(200);
 	} catch (error) {
 		console.log(error);
 	}

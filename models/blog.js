@@ -47,7 +47,10 @@ class Blog {
 		updatedThumbnail,
 		updatedContent,
 		isAnonymous,
-		updatedTag
+		updatedTag,
+		createdTime,
+		updatedTime,
+		author
 	) {
 		return mongo()
 			.collection('blogs')
@@ -60,6 +63,9 @@ class Blog {
 						content: updatedContent,
 						isAnonymous: isAnonymous,
 						tag: updatedTag,
+						createdTime: createdTime,
+						updatedTime: updatedTime,
+						author: author,
 					},
 				}
 			);

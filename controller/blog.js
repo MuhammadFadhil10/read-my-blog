@@ -110,14 +110,19 @@ const updateBlog = async (req, res) => {
 	const isAnonymous = req.body.isAnonymous;
 	const updatedTag = req.body.tag;
 
+	const oldBlogData = await Blog.findById(blogId);
+
 	try {
 		await Blog.update(
 			blogId,
-			updatedTitle,
-			updatedThumbnail,
-			updatedContent,
-			isAnonymous,
-			updatedTag
+			updatedTitle ? updatedTitle : oldBlogData.title,
+			updatedThumbnail ? updatedThumbnail : oldBlogData.thumbnail,
+			updatedContent ? updatedContent : oldBlogData.content,
+			isAnonymous ? isAnonymous : oldBlogData.isAnonymous,
+			updatedTag ? updatedTag : oldBlogData.tag,
+			oldBlogData.createdTime,
+			new Date().toISOString(),
+			oldBlogData.author
 		);
 		return res
 			.json({

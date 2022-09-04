@@ -12,3 +12,5 @@ class Comment {
 		return mongo().collection('comments').insertOne(this);
 	}
 }
+
+module.exports = Comment;

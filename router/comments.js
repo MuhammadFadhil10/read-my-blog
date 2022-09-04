@@ -9,6 +9,6 @@ const {
 
 router.post('/send-comment/:senderId/:blogId', uploadComment);
 router.get('/comments/:blogId', getComment);
-router.patch('/comment/update/:blogId', updateComment);
+router.patch('/comment/update/:commentId', updateComment);
 
 module.exports = router;

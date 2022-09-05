@@ -11,6 +11,10 @@ class Folder {
 	create() {
 		return mongo().collection('folders').insertOne(this);
 	}
+
+	static findByUser(userId) {
+		return mongo().collection('folders').find({ userId: userId });
+	}
 }
 
 module.exports = Folder;

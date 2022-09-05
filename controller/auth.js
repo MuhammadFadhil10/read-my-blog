@@ -47,25 +47,29 @@ const login = async (req, res) => {
 			message: error.array().map((err) => err.msg),
 		});
 	}
-	// check if user exist with email
-	const userExist = await User.findUser('email', email);
-	if (!userExist) {
+	try {
+		// check if user exist with email
+		const userExist = await User.findUser('email', email);
+		if (!userExist) {
+			return res.json({
+				status: 'error',
+				message: 'email or password wrong!',
+			});
+		}
+		const isPasswordMatch = await compare(password, userExist.password);
+		if (!isPasswordMatch) {
+			return res.json({
+				status: 'error',
+				message: 'email or password wrong!',
+			});
+		}
 		return res.json({
-			status: 'error',
-			message: 'email or password wrong!',
+			status: 'success',
+			message: 'you are logged in!',
 		});
+	} catch (error) {
+		console.log(error);
 	}
-	const isPasswordMatch = await compare(password, userExist.password);
-	if (!isPasswordMatch) {
-		return res.json({
-			status: 'error',
-			message: 'email or password wrong!',
-		});
-	}
-	return res.json({
-		status: 'success',
-		message: 'you are logged in!',
-	});
 };
 
 exports.register = register;

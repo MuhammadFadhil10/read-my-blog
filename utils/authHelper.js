@@ -19,7 +19,14 @@ class Validate {
 			.withMessage(`Password minimum length is ${minPassword} character!`);
 	}
 	static confirmPassword(fieldName) {
-		return body(fieldName, 'confirm your password').notEmpty();
+		return body(fieldName, 'confirm your password')
+			.notEmpty()
+			.custom((value, { req }) => {
+				if (value !== req.body.password) {
+					throw new Error();
+				}
+				return true;
+			});
 	}
 }
 

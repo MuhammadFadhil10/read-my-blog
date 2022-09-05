@@ -14,27 +14,31 @@ const register = async (req, res) => {
 		});
 	}
 
-	const emailExist = await User.findUser('email', email);
-	const userNameExist = await User.findUser('userName', userName);
+	try {
+		const emailExist = await User.findUser('email', email);
+		const userNameExist = await User.findUser('userName', userName);
 
-	if (emailExist || userNameExist) {
+		if (emailExist || userNameExist) {
+			return res.json({
+				status: 'error',
+				message: emailExist
+					? `email ${email} is already registered!`
+					: `username ${userName} is already registered!`,
+			});
+		}
+
+		const hashedPassword = await hash(password.toString(), 12);
+
+		const user = new Auth(email, userName, name, hashedPassword);
+		await user.createUser();
+
 		return res.json({
-			status: 'error',
-			message: emailExist
-				? `email ${email} is already registered!`
-				: `username ${userName} is already registered!`,
+			status: 'success',
+			message: 'Success create your account!',
 		});
+	} catch (error) {
+		console.log(error);
 	}
-
-	const hashedPassword = await hash(password.toString(), 12);
-
-	const user = new Auth(email, userName, name, hashedPassword);
-	await user.createUser();
-
-	return res.json({
-		status: 'success',
-		message: 'Success create your account!',
-	});
 };
 
 const login = async (req, res) => {

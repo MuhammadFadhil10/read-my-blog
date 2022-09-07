@@ -56,6 +56,7 @@ const myFolders = async (req, res) => {
 
 const updateFolder = async (req, res) => {
 	const folderId = new ObjectId(req.params.folderId.trim());
+	const userId = new ObjectId(req.params.userId.trim());
 	let { newFolderName } = req.body;
 
 	try {
@@ -73,17 +74,19 @@ const updateFolder = async (req, res) => {
 			// if folder name already exist but just one, then add (1) to folder name as first duplicate
 			if (folderNameExist.length === 1 && folderNameDuplicate.length === 0) {
 				newFolderName += ` (1)`;
+				await Folder.update(folderId, newFolderName);
 			}
 			// if the folder name already more than 1 (have 1 duplicate), then add more duplicate
 			if (folderNameDuplicate.length > 0) {
 				// add more duplicate number to folder name
 				newFolderName += ` (${folderNameDuplicate.length + 1})`;
+				await Folder.update(folderId, newFolderName);
 			}
 		}
 	} catch (error) {
 		console.log(error);
 	}
-	await Folder.update(folderId, newFolderName);
+
 	return res
 		.json({
 			status: 'success',

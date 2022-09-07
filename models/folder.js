@@ -19,12 +19,18 @@ class Folder {
 	static update(folderId, newFolderName) {
 		return mongo()
 			.collection('folders')
-			.updateOne({ _id: folderId }, { $set: { folderName: newFolderName } });
+			.updateOne(
+				{ _id: folderId },
+				{
+					$set: {
+						folderName: newFolderName,
+						updatedTime: new Date().toISOString(),
+					},
+				}
+			);
 	}
 	static delete(folderId) {
-		return mongo()
-			.collection('folders')
-			.deleteOne({ _id: folderId, updatedTime: new Date().toISOString() });
+		return mongo().collection('folders').deleteOne({ _id: folderId });
 	}
 }
 

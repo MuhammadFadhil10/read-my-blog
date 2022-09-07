@@ -9,6 +9,6 @@ const {
 
 router.post('/folder/create/:userId', createFolder);
 router.get('/folder/my-folders/:userId', myFolders);
-router.patch('/folder/update/:folderId', updateFolder);
+router.patch('/folder/update/:folderId/:userId', updateFolder);
 
 module.exports = router;

@@ -4,6 +4,7 @@ class Folder {
 	constructor(folderName, userId) {
 		this.folderName = folderName;
 		this.userId = userId;
+		this.blogList = [];
 		this.createdTime = new Date().toISOString();
 		this.updatedTime = null;
 	}
@@ -31,6 +32,19 @@ class Folder {
 	}
 	static delete(folderId) {
 		return mongo().collection('folders').deleteOne({ _id: folderId });
+	}
+
+	static addBlog(folderId, blogId) {
+		return mongo()
+			.collection('folders')
+			.updateOne(
+				{ _id: folderId },
+				{
+					$push: {
+						blogList: blogId,
+					},
+				}
+			);
 	}
 }
 

@@ -95,6 +95,22 @@ const updateFolder = async (req, res) => {
 		.status(200);
 };
 
+const deleteFolder = async (req, res) => {
+	const folderId = new ObjectId(req.params.folderId.trim());
+	try {
+		await Folder.delete(folderId);
+		return res
+			.json({
+				status: 'success',
+				message: 'Folder deleted!',
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.createFolder = createFolder;
 exports.myFolders = myFolders;
 exports.updateFolder = updateFolder;
+exports.deleteFolder = deleteFolder;

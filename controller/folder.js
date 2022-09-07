@@ -95,6 +95,22 @@ const updateFolder = async (req, res) => {
 		.status(200);
 };
 
+const addBlog = async (req, res) => {
+	const folderId = new ObjectId(req.params.folderId.trim());
+	const blogId = new ObjectId(req.params.blogId.trim());
+	try {
+		await Folder.addBlog(folderId, blogId);
+		return res
+			.json({
+				status: 'success',
+				message: 'Blog added!',
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const deleteFolder = async (req, res) => {
 	const folderId = new ObjectId(req.params.folderId.trim());
 	try {

@@ -14,27 +14,31 @@ const register = async (req, res) => {
 		});
 	}
 
-	const emailExist = await User.findUser('email', email);
-	const userNameExist = await User.findUser('userName', userName);
+	try {
+		const emailExist = await User.findUser('email', email);
+		const userNameExist = await User.findUser('userName', userName);
 
-	if (emailExist || userNameExist) {
+		if (emailExist || userNameExist) {
+			return res.json({
+				status: 'error',
+				message: emailExist
+					? `email ${email} is already registered!`
+					: `username ${userName} is already registered!`,
+			});
+		}
+
+		const hashedPassword = await hash(password.toString(), 12);
+
+		const user = new Auth(email, userName, name, hashedPassword);
+		await user.createUser();
+
 		return res.json({
-			status: 'error',
-			message: emailExist
-				? `email ${email} is already registered!`
-				: `username ${userName} is already registered!`,
+			status: 'success',
+			message: 'Success create your account!',
 		});
+	} catch (error) {
+		console.log(error);
 	}
-
-	const hashedPassword = await hash(password.toString(), 12);
-
-	const user = new Auth(email, userName, name, hashedPassword);
-	await user.createUser();
-
-	return res.json({
-		status: 'success',
-		message: 'Success create your account!',
-	});
 };
 
 const login = async (req, res) => {
@@ -47,25 +51,29 @@ const login = async (req, res) => {
 			message: error.array().map((err) => err.msg),
 		});
 	}
-	// check if user exist with email
-	const userExist = await User.findUser('email', email);
-	if (!userExist) {
+	try {
+		// check if user exist with email
+		const userExist = await User.findUser('email', email);
+		if (!userExist) {
+			return res.json({
+				status: 'error',
+				message: 'email or password wrong!',
+			});
+		}
+		const isPasswordMatch = await compare(password, userExist.password);
+		if (!isPasswordMatch) {
+			return res.json({
+				status: 'error',
+				message: 'email or password wrong!',
+			});
+		}
 		return res.json({
-			status: 'error',
-			message: 'email or password wrong!',
+			status: 'success',
+			message: 'you are logged in!',
 		});
+	} catch (error) {
+		console.log(error);
 	}
-	const isPasswordMatch = await compare(password, userExist.password);
-	if (!isPasswordMatch) {
-		return res.json({
-			status: 'error',
-			message: 'email or password wrong!',
-		});
-	}
-	return res.json({
-		status: 'success',
-		message: 'you are logged in!',
-	});
 };
 
 exports.register = register;

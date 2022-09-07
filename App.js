@@ -8,7 +8,11 @@ const { mongoConnect } = require('./config/mongoConfig');
 
 const app = express();
 
-app.use(cors({}));
+app.use(
+	cors({
+		origin: process.env.CLIENT_ORIGIN,
+	})
+);
 app.use(bodyParser.json());
 
 const blogRouter = require('./router/blog');

@@ -15,6 +15,15 @@ class Folder {
 	static findByUser(userId) {
 		return mongo().collection('folders').find({ userId: userId });
 	}
+
+	static update(folderId, newFolderName) {
+		return mongo()
+			.collection('folders')
+			.updateOne({ _id: folderId }, { $set: { folderName: newFolderName } });
+	}
+	static delete(folderId) {
+		return mongo().collection('folders').deleteOne({ _id: folderId });
+	}
 }
 
 module.exports = Folder;

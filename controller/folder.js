@@ -38,4 +38,21 @@ const createFolder = async (req, res) => {
 	}
 };
 
+const myFolders = async (req, res) => {
+	const userId = new ObjectId(req.params.userId.trim());
+	try {
+		const folders = await Folder.findByUser(userId).toArray();
+		return res
+			.json({
+				status: 'success',
+				totalResults: folders.length,
+				folders: folders,
+			})
+			.status(200);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.createFolder = createFolder;
+exports.myFolders = myFolders;

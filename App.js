@@ -12,12 +12,14 @@ app.use(cors({}));
 app.use(bodyParser.json());
 
 const blogRouter = require('./router/blog');
+const folderRouter = require('./router/folder');
 const authRouter = require('./router/auth');
 const userRouter = require('./router/user');
 const commentRouter = require('./router/comments');
 const likeRouter = require('./router/like');
 
 app.use('/api', blogRouter);
+app.use('/api', folderRouter);
 app.use('/api', commentRouter);
 app.use('/api', likeRouter);
 app.use('/api', userRouter);

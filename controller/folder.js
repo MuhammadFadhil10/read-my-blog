@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const Folder = require('../models/folder');
+const Blog = require('../models/blog');
 
 const createFolder = async (req, res) => {
 	const userId = new ObjectId(req.params.userId.trim());
@@ -114,6 +115,19 @@ const addBlog = async (req, res) => {
 	const folderId = new ObjectId(req.params.folderId.trim());
 	const blogId = new ObjectId(req.params.blogId.trim());
 	try {
+		// check if blog already in that folder
+		const folder = await Folder.getBlogList(folderId);
+		if (folder.blogList.length > 0) {
+			const existingBlog = folder.blogList.filter(
+				(blog) => blog.toString() === blogId.toString()
+			);
+			if (existingBlog.length > 0) {
+				return res.json({
+					status: 'error',
+					message: 'Blog is already in this folder',
+				});
+			}
+		}
 		await Folder.addBlog(folderId, blogId);
 		return res
 			.json({

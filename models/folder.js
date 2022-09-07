@@ -17,7 +17,7 @@ class Folder {
 		return mongo().collection('folders').find({ userId: userId });
 	}
 	static getBlogList(folderId) {
-		return mongo().collections('foders').findOne({ _id: folderId });
+		return mongo().collection('folders').findOne({ _id: folderId });
 	}
 
 	static update(folderId, newFolderName) {

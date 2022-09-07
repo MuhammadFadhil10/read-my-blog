@@ -59,11 +59,11 @@ const blogList = async (req, res) => {
 	try {
 		const folder = await Folder.getBlogList(folderId);
 		const blogs = folder.blogList;
-        return res.json({
-            status: 'success',
-            totalResult: blogs.length;
-            blogs: blogs
-        })
+		return res.json({
+			status: 'success',
+			totalResult: blogs.length,
+			blogs: blogs,
+		});
 	} catch (error) {
 		console.log(error);
 	}

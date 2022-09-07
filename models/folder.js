@@ -16,6 +16,9 @@ class Folder {
 	static findByUser(userId) {
 		return mongo().collection('folders').find({ userId: userId });
 	}
+	static getBlogList(folderId) {
+		return mongo().collections('foders').findOne({ _id: folderId });
+	}
 
 	static update(folderId, newFolderName) {
 		return mongo()
@@ -41,6 +44,18 @@ class Folder {
 				{ _id: folderId },
 				{
 					$push: {
+						blogList: blogId,
+					},
+				}
+			);
+	}
+	static removeBlog(folderId, blogId) {
+		return mongo()
+			.collection('folders')
+			.updateOne(
+				{ _id: folderId },
+				{
+					$pull: {
 						blogList: blogId,
 					},
 				}

@@ -54,6 +54,21 @@ const myFolders = async (req, res) => {
 	}
 };
 
+const blogList = async (req, res) => {
+	const folderId = new ObjectId(req.params.folderId.trim());
+	try {
+		const folder = await Folder.getBlogList(folderId);
+		const blogs = folder.blogList;
+        return res.json({
+            status: 'success',
+            totalResult: blogs.length;
+            blogs: blogs
+        })
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const updateFolder = async (req, res) => {
 	const folderId = new ObjectId(req.params.folderId.trim());
 	const userId = new ObjectId(req.params.userId.trim());
@@ -144,6 +159,7 @@ const deleteFolder = async (req, res) => {
 
 exports.createFolder = createFolder;
 exports.myFolders = myFolders;
+exports.blogList = blogList;
 exports.updateFolder = updateFolder;
 exports.addBlog = addBlog;
 exports.removeBlog = removeBlog;

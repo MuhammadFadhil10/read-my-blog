@@ -129,4 +129,5 @@ const deleteFolder = async (req, res) => {
 exports.createFolder = createFolder;
 exports.myFolders = myFolders;
 exports.updateFolder = updateFolder;
+exports.addBlog = addBlog;
 exports.deleteFolder = deleteFolder;

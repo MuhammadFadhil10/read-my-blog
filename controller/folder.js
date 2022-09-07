@@ -54,5 +54,44 @@ const myFolders = async (req, res) => {
 	}
 };
 
+const updateFolder = async (req, res) => {
+	const folderId = new ObjectId(req.params.folderId.trim());
+	let { newFolderName } = req.body;
+
+	try {
+		// check if folder already exist
+		const hasFolder = await Folder.findByUser(userId).toArray();
+		if (hasFolder.length > 0) {
+			// check if folder name already exist but just one
+			const folderNameExist = hasFolder.filter(
+				(folder) => folder.folderName === newFolderName
+			);
+			// check if folder name already duplicate
+			const folderNameDuplicate = hasFolder.filter((folder) =>
+				folder.folderName.includes(`${newFolderName} (`)
+			);
+			// if folder name already exist but just one, then add (1) to folder name as first duplicate
+			if (folderNameExist.length === 1 && folderNameDuplicate.length === 0) {
+				newFolderName += ` (1)`;
+			}
+			// if the folder name already more than 1 (have 1 duplicate), then add more duplicate
+			if (folderNameDuplicate.length > 0) {
+				// add more duplicate number to folder name
+				newFolderName += ` (${folderNameDuplicate.length + 1})`;
+			}
+		}
+	} catch (error) {
+		console.log(error);
+	}
+	await Folder.update(folderId, newFolderName);
+	return res
+		.json({
+			status: 'success',
+			message: 'Folder updated!',
+		})
+		.status(200);
+};
+
 exports.createFolder = createFolder;
 exports.myFolders = myFolders;
+exports.updateFolder = updateFolder;

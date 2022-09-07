@@ -22,7 +22,9 @@ class Folder {
 			.updateOne({ _id: folderId }, { $set: { folderName: newFolderName } });
 	}
 	static delete(folderId) {
-		return mongo().collection('folders').deleteOne({ _id: folderId });
+		return mongo()
+			.collection('folders')
+			.deleteOne({ _id: folderId, updatedTime: new Date().toISOString() });
 	}
 }
 
